@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation Prompt Generator</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            400: '#fb7185',
+                            600: '#e11d48',
+                            800: '#9f1239',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fdfbf7 0%, #eef2f3 100%);
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(244, 63, 94, 0.15);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #fda4af;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #fb7185;
+        }
+        .tab-btn.active {
+            background-color: #e11d48;
+            color: #ffffff;
+            border-color: #e11d48;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-5xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="text-center space-y-3">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-100/80 text-rose-800 text-sm font-medium border border-rose-200">
+                <i class="fa-solid font-xs fa-heart text-rose-500"></i> Generator Prompt Website Undangan
+            </div>
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+                Wedding Invitation Prompt Generator
+            </h1>
+            <p class="max-w-2xl mx-auto text-slate-600 text-sm sm:text-base">
+                Formulir interaktif untuk membuat prompt instruksi pembuatan website undangan pernikahan digital secara otomatis.
+            </p>
+        </header>
+
+        <!-- Form Layout Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Form Side -->
+            <form id="promptForm" onsubmit="generatePrompt(event)" class="lg:col-span-7 glass-card rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+                
+                <!-- 1. Data Pengantin -->
+                <div class="border-b border-rose-100 pb-3">
+                    <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-user-group text-rose-500 text-lg"></i> 1. Nama Pengantin
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="groomName" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            Nama Lengkap Pengantin Pria <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="groomName" placeholder="Contoh: Raden Ahmad Fauzi, S.T." required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="brideName" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            Nama Lengkap Pengantin Wanita <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="brideName" placeholder="Contoh: Siti Anisa Putri, M.Ds." required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80">
+                    </div>
+                </div>
+
+                <!-- 2. Tanggal & Waktu -->
+                <div class="border-b border-rose-100 pb-3 pt-2">
+                    <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-days text-rose-500 text-lg"></i> 2. Tanggal & Waktu Acara
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="form-group">
+                        <label for="weddingDate" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            Tanggal Pernikahan <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="date" id="weddingDate" required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="akadTime" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            Waktu Akad Nikah <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="akadTime" placeholder="08.00 - 10.00 WIB" required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receptionTime" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            Waktu Resepsi <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="receptionTime" placeholder="11.00 - 14.00 WIB" required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80">
+                    </div>
+                </div>
+
+                <!-- 3. Lokasi -->
+                <div class="border-b border-rose-100 pb-3 pt-2">
+                    <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-location-dot text-rose-500 text-lg"></i> 3. Lokasi Acara
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="akadLocation" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            Lokasi Akad Nikah <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="akadLocation" placeholder="Nama Masjid/Tempat & Alamat Lengkap" required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receptionLocation" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            Lokasi Resepsi <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="receptionLocation" placeholder="Nama Gedung/Venue & Alamat Lengkap" required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80">
+                    </div>
+                </div>
+
+                <!-- 4 & 5. Tema Warna & Gaya Visual -->
+                <div class="border-b border-rose-100 pb-3 pt-2">
+                    <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-palette text-rose-500 text-lg"></i> 4 & 5. Tema Warna & Gaya Visual
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="colorTheme" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            4. Pilih Tema Warna Website
+                        </label>
+                        <select id="colorTheme" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white">
+                            <option value="Dusty Rose">Dusty Rose</option>
+                            <option value="Sage Green">Sage Green</option>
+                            <option value="Champagne / Gold">Champagne / Gold</option>
+                            <option value="Ivory / Off White">Ivory / Off White</option>
+                            <option value="Blush Pink">Blush Pink</option>
+                            <option value="Lavender / Lilac">Lavender / Lilac</option>
+                            <option value="Emerald Green">Emerald Green</option>
+                            <option value="Navy Blue">Navy Blue</option>
+                            <option value="Terracotta / Burnt Orange">Terracotta / Burnt Orange</option>
+                            <option value="Maroon / Wine Red">Maroon / Wine Red</option>
+                            <option value="Peach / Coral">Peach / Coral</option>
+                            <option value="Black & White">Black & White</option>
+                            <option value="Dusty Blue">Dusty Blue</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="visualStyle" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                            5. Gaya Visual Website
+                        </label>
+                        <select id="visualStyle" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white">
+                            <option value="Minimalis elegan">Minimalis elegan</option>
+                            <option value="Rustic">Rustic</option>
+                            <option value="Floral / Botanical">Floral / Botanical</option>
+                            <option value="Modern glam">Modern glam</option>
+                            <option value="Classic / Traditional">Classic / Traditional</option>
+                            <option value="Bohemian">Bohemian</option>
+                            <option value="Cute & Fun">Cute & Fun</option>
+                            <option value="Kultural / Adat">Kultural / Adat</option>
+                            <option value="Dark mode / Moody">Dark mode / Moody</option>
+                            <option value="Monokrom hitam putih">Monokrom hitam putih</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 6. Elemen-elemen Website -->
+                <div class="border-b border-rose-100 pb-3 pt-2">
+                    <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-rose-500 text-lg"></i> 6. Elemen & Fitur Website
+                    </h2>
+                </div>
+
+                <div class="form-group space-y-3">
+                    
+                    <!-- Hero Image -->
+                    <div class="p-3.5 rounded-xl border border-slate-200/80 bg-white/60">
+                        <label class="inline-flex items-center gap-3 cursor-pointer w-full">
+                            <input type="checkbox" id="elemHero" onchange="toggleDynamicInput('elemHero', 'heroInputDiv')" class="w-4 h-4 text-rose-600 rounded border-slate-300 focus:ring-rose-500">
+                            <span class="text-sm font-medium text-slate-800">Hero Image Pasangan</span>
+                        </label>
+                        <div id="heroInputDiv" class="hidden mt-3 pl-7 space-y-2">
+                            <div class="flex gap-2 mb-2">
+                                <button type="button" onclick="switchSourceTab('hero', 'url')" id="heroTabUrl" class="tab-btn active px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200">Google Drive / URL</button>
+                                <button type="button" onclick="switchSourceTab('hero', 'local')" id="heroTabLocal" class="tab-btn px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200 bg-white text-slate-600">Upload Lokal</button>
+                            </div>
+                            <div id="heroUrlBox">
+                                <input type="url" id="heroUrl" placeholder="Link Google Drive / URL Foto Utama Pasangan" class="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 focus:ring-2 focus:ring-rose-400 bg-white">
+                            </div>
+                            <div id="heroLocalBox" class="hidden">
+                                <input type="file" id="heroFile" accept="image/*" class="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Countdown -->
+                    <div class="p-3.5 rounded-xl border border-slate-200/80 bg-white/60">
+                        <label class="inline-flex items-center gap-3 cursor-pointer w-full">
+                            <input type="checkbox" id="elemCountdown" checked class="w-4 h-4 text-rose-600 rounded border-slate-300">
+                            <span class="text-sm font-medium text-slate-800">Countdown Timer</span>
+                        </label>
+                    </div>
+
+                    <!-- RSVP Form -->
+                    <div class="p-3.5 rounded-xl border border-slate-200/80 bg-white/60">
+                        <label class="inline-flex items-center gap-3 cursor-pointer w-full">
+                            <input type="checkbox" id="elemRSVP" checked class="w-4 h-4 text-rose-600 rounded border-slate-300">
+                            <span class="text-sm font-medium text-slate-800">RSVP Form</span>
+                        </label>
+                    </div>
+
+                    <!-- Galeri Foto (6 Foto) -->
+                    <div class="p-3.5 rounded-xl border border-slate-200/80 bg-white/60">
+                        <label class="inline-flex items-center gap-3 cursor-pointer w-full">
+                            <input type="checkbox" id="elemGallery" onchange="toggleDynamicInput('elemGallery', 'galleryInputDiv')" class="w-4 h-4 text-rose-600 rounded border-slate-300">
+                            <span class="text-sm font-medium text-slate-800">Galeri Foto Pasangan (6 Foto)</span>
+                        </label>
+                        <div id="galleryInputDiv" class="hidden mt-3 pl-7 space-y-3">
+                            <div class="flex gap-2">
+                                <button type="button" onclick="switchSourceTab('gallery', 'url')" id="galleryTabUrl" class="tab-btn active px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200">Google Drive / URL</button>
+                                <button type="button" onclick="switchSourceTab('gallery', 'local')" id="galleryTabLocal" class="tab-btn px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200 bg-white text-slate-600">Upload Lokal (6 File)</button>
+                            </div>
+
+                            <!-- URL Mode -->
+                            <div id="galleryUrlBox" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <input type="url" id="galUrl1" placeholder="Link G-Drive Foto 1" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white">
+                                <input type="url" id="galUrl2" placeholder="Link G-Drive Foto 2" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white">
+                                <input type="url" id="galUrl3" placeholder="Link G-Drive Foto 3" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white">
+                                <input type="url" id="galUrl4" placeholder="Link G-Drive Foto 4" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white">
+                                <input type="url" id="galUrl5" placeholder="Link G-Drive Foto 5" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white">
+                                <input type="url" id="galUrl6" placeholder="Link G-Drive Foto 6" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white">
+                            </div>
+
+                            <!-- Local Upload Mode -->
+                            <div id="galleryLocalBox" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <input type="file" id="galFile1" accept="image/*" class="px-2 py-1 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                                <input type="file" id="galFile2" accept="image/*" class="px-2 py-1 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                                <input type="file" id="galFile3" accept="image/*" class="px-2 py-1 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                                <input type="file" id="galFile4" accept="image/*" class="px-2 py-1 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                                <input type="file" id="galFile5" accept="image/*" class="px-2 py-1 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                                <input type="file" id="galFile6" accept="image/*" class="px-2 py-1 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Background Music -->
+                    <div class="p-3.5 rounded-xl border border-slate-200/80 bg-white/60">
+                        <label class="inline-flex items-center gap-3 cursor-pointer w-full">
+                            <input type="checkbox" id="elemMusic" onchange="toggleDynamicInput('elemMusic', 'musicInputDiv')" class="w-4 h-4 text-rose-600 rounded border-slate-300">
+                            <span class="text-sm font-medium text-slate-800">Background Music</span>
+                        </label>
+                        <div id="musicInputDiv" class="hidden mt-3 pl-7 space-y-2">
+                            <div class="flex gap-2 mb-2">
+                                <button type="button" onclick="switchSourceTab('music', 'url')" id="musicTabUrl" class="tab-btn active px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200">Link URL / Audio</button>
+                                <button type="button" onclick="switchSourceTab('music', 'local')" id="musicTabLocal" class="tab-btn px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200 bg-white text-slate-600">Upload Lokal (.mp3)</button>
+                            </div>
+                            <div id="musicUrlBox">
+                                <input type="url" id="musicUrl" placeholder="Link Direct Audio / MP3" class="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 bg-white">
+                            </div>
+                            <div id="musicLocalBox" class="hidden">
+                                <input type="file" id="musicFile" accept="audio/*" class="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Maps -->
+                    <div class="p-3.5 rounded-xl border border-slate-200/80 bg-white/60">
+                        <label class="inline-flex items-center gap-3 cursor-pointer w-full">
+                            <input type="checkbox" id="elemMaps" checked class="w-4 h-4 text-rose-600 rounded border-slate-300">
+                            <span class="text-sm font-medium text-slate-800">Google Maps Lokasi</span>
+                        </label>
+                    </div>
+
+                    <!-- Wedding Gift -->
+                    <div class="p-3.5 rounded-xl border border-slate-200/80 bg-white/60">
+                        <label class="inline-flex items-center gap-3 cursor-pointer w-full">
+                            <input type="checkbox" id="elemGift" onchange="toggleDynamicInput('elemGift', 'giftInputDiv')" class="w-4 h-4 text-rose-600 rounded border-slate-300">
+                            <span class="text-sm font-medium text-slate-800">Wedding Gift (Rekening & QR Code / QRIS)</span>
+                        </label>
+                        <div id="giftInputDiv" class="hidden mt-3 pl-7 space-y-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Nomor Rekening & Bank / Atas Nama</label>
+                                <input type="text" id="bankInfo" placeholder="Contoh: BCA 1234567890 a.n. Nama Pemilik / Mandiri 9876543210" class="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Gambar QR Code / QRIS Gift</label>
+                                <div class="flex gap-2 mb-2">
+                                    <button type="button" onclick="switchSourceTab('qr', 'url')" id="qrTabUrl" class="tab-btn active px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200">Input URL QR</button>
+                                    <button type="button" onclick="switchSourceTab('qr', 'local')" id="qrTabLocal" class="tab-btn px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200 bg-white text-slate-600">Upload File QR</button>
+                                </div>
+                                <div id="qrUrlBox">
+                                    <input type="url" id="qrUrl" placeholder="Link Direct URL / G-Drive Gambar QRIS" class="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 bg-white">
+                                </div>
+                                <div id="qrLocalBox" class="hidden">
+                                    <input type="file" id="qrFile" accept="image/*" class="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-white text-slate-600">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ucapan dari Tamu -->
+                    <div class="p-3.5 rounded-xl border border-slate-200/80 bg-white/60">
+                        <label class="inline-flex items-center gap-3 cursor-pointer w-full">
+                            <input type="checkbox" id="elemWishes" checked class="w-4 h-4 text-rose-600 rounded border-slate-300">
+                            <span class="text-sm font-medium text-slate-800">Ucapan dari Tamu</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 7. Cerita Cinta -->
+                <div class="border-b border-rose-100 pb-3 pt-2">
+                    <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-heart-pulse text-rose-500 text-lg"></i> 7. Cerita Cinta Kalian
+                    </h2>
+                </div>
+
+                <div class="form-group">
+                    <label for="loveStory" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                        Perjalanan Cinta Singkat
+                    </label>
+                    <textarea id="loveStory" rows="3" placeholder="Ceritakan singkat awal pertama bertemu atau momen penting perjalanan cinta..."
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80"></textarea>
+                </div>
+
+                <!-- 8. Kata Pembuka Ucapan -->
+                <div class="border-b border-rose-100 pb-3 pt-2">
+                    <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-comment-dots text-rose-500 text-lg"></i> 8. Pembuka Kolom Ucapan
+                    </h2>
+                </div>
+
+                <div class="form-group">
+                    <label for="wishesHeader" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+                        Kata-kata Pembuka Ucapan Tamu Undangan
+                    </label>
+                    <textarea id="wishesHeader" rows="2" placeholder="Ungkapan kebahagiaan atas kehadiran/doa restu..."
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/80">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan memberikan doa restu bagi pernikahan kami.</textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                    class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold shadow-lg shadow-rose-200 transition-all transform active:scale-[0.99] flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Prompt
+                </button>
+            </form>
+
+            <!-- Output Side -->
+            <div class="lg:col-span-5 space-y-4 lg:sticky lg:top-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col h-[680px] lg:h-[800px]">
+                    <div class="flex flex-wrap items-center justify-between border-b border-rose-100 pb-4 mb-4 gap-2">
+                        <div>
+                            <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-code text-rose-500 text-lg"></i> Hasil Prompt
+                            </h2>
+                            <p class="text-xs text-slate-500">Prompt siap salin / unduh</p>
+                        </div>
+                        <div class="flex gap-1.5">
+                            <button onclick="copyPrompt()" id="copyBtn" disabled
+                                class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 font-medium text-xs transition-all flex items-center gap-1.5 border border-slate-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <i class="fa-regular fa-copy"></i> Salin
+                            </button>
+                            <button onclick="downloadPrompt()" id="downloadBtn" disabled
+                                class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 font-medium text-xs transition-all flex items-center gap-1.5 border border-slate-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <i class="fa-solid fa-download"></i> Unduh
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Textarea Output -->
+                    <div class="flex-1 bg-slate-900 rounded-xl p-4 overflow-hidden flex flex-col relative">
+                        <textarea id="promptOutput" readonly placeholder="Klik tombol 'Generate Prompt' untuk menghasilkan prompt instruksi..."
+                            class="w-full h-full bg-transparent text-rose-100/90 font-mono text-xs leading-relaxed focus:outline-none resize-none custom-scrollbar pr-2" spellcheck="false"></textarea>
+                    </div>
+
+                    <!-- Notification -->
+                    <div id="toastMessage" class="hidden mt-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                        <span id="toastText">Prompt berhasil disalin!</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Tab State Trackers
+        const sourceState = {
+            hero: 'url',
+            gallery: 'url',
+            music: 'url',
+            qr: 'url'
+        };
+
+        function toggleDynamicInput(checkboxId, targetDivId) {
+            const checkbox = document.getElementById(checkboxId);
+            const targetDiv = document.getElementById(targetDivId);
+            if (checkbox && targetDiv) {
+                targetDiv.classList.toggle('hidden', !checkbox.checked);
+            }
+        }
+
+        function switchSourceTab(type, sourceMode) {
+            sourceState[type] = sourceMode;
+
+            const urlBtn = document.getElementById(`${type}TabUrl`);
+            const localBtn = document.getElementById(`${type}TabLocal`);
+            const urlBox = document.getElementById(`${type}UrlBox`);
+            const localBox = document.getElementById(`${type}LocalBox`);
+
+            if (sourceMode === 'url') {
+                urlBtn.classList.add('active', 'bg-rose-600', 'text-white');
+                urlBtn.classList.remove('bg-white', 'text-slate-600');
+                localBtn.classList.remove('active', 'bg-rose-600', 'text-white');
+                localBtn.classList.add('bg-white', 'text-slate-600');
+
+                urlBox.classList.remove('hidden');
+                localBox.classList.add('hidden');
+            } else {
+                localBtn.classList.add('active', 'bg-rose-600', 'text-white');
+                localBtn.classList.remove('bg-white', 'text-slate-600');
+                urlBtn.classList.remove('active', 'bg-rose-600', 'text-white');
+                urlBtn.classList.add('bg-white', 'text-slate-600');
+
+                localBox.classList.remove('hidden');
+                urlBox.classList.add('hidden');
+            }
+        }
+
+        function generatePrompt(event) {
+            event.preventDefault();
+
+            const groomName = document.getElementById('groomName').value.trim();
+            const brideName = document.getElementById('brideName').value.trim();
+            const weddingDate = document.getElementById('weddingDate').value;
+            const akadTime = document.getElementById('akadTime').value.trim();
+            const receptionTime = document.getElementById('receptionTime').value.trim();
+            const akadLocation = document.getElementById('akadLocation').value.trim();
+            const receptionLocation = document.getElementById('receptionLocation').value.trim();
+            const colorTheme = document.getElementById('colorTheme').value;
+            const visualStyle = document.getElementById('visualStyle').value;
+            const loveStory = document.getElementById('loveStory').value.trim();
+            const wishesHeader = document.getElementById('wishesHeader').value.trim();
+
+            let formattedDate = weddingDate;
+            if (weddingDate) {
+                const dateObj = new Date(weddingDate);
+                formattedDate = dateObj.toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            let selectedElements = [];
+
+            // 1. Hero Image
+            if (document.getElementById('elemHero').checked) {
+                let heroText = "- Hero image pasangan";
+                if (sourceState.hero === 'url') {
+                    const heroUrl = document.getElementById('heroUrl').value.trim();
+                    if (heroUrl) heroText += ` (Link URL/Drive: ${heroUrl})`;
+                } else {
+                    const fileInput = document.getElementById('heroFile');
+                    if (fileInput.files.length > 0) {
+                        heroText += ` (File Lokal Disiapkan: "${fileInput.files[0].name}" - Buatkan placeholder/src mengarah ke file lokal ini)`;
+                    } else {
+                        heroText += ` (Menggunakan file lokal hero image)`;
+                    }
+                }
+                selectedElements.push(heroText);
+            }
+
+            // 2. Countdown
+            if (document.getElementById('elemCountdown').checked) {
+                selectedElements.push("- Countdown timer (Hitung mundur waktu acara)");
+            }
+
+            // 3. RSVP
+            if (document.getElementById('elemRSVP').checked) {
+                selectedElements.push("- RSVP form (Konfirmasi kehadiran tamu)");
+            }
+
+            // 4. Galeri Foto
+            if (document.getElementById('elemGallery').checked) {
+                let galText = "- Galeri foto pasangan (6 Foto)";
+                let galDetails = [];
+
+                if (sourceState.gallery === 'url') {
+                    for (let i = 1; i <= 6; i++) {
+                        const url = document.getElementById(`galUrl${i}`).value.trim();
+                        if (url) galDetails.push(`Foto ${i}: ${url}`);
+                    }
+                    if (galDetails.length > 0) {
+                        galText += `\n  Daftar Link G-Drive/URL:\n  ` + galDetails.join('\n  ');
+                    }
+                } else {
+                    for (let i = 1; i <= 6; i++) {
+                        const fileInput = document.getElementById(`galFile${i}`);
+                        if (fileInput && fileInput.files.length > 0) {
+                            galDetails.push(`Foto ${i} (Lokal): "${fileInput.files[0].name}"`);
+                        }
+                    }
+                    if (galDetails.length > 0) {
+                        galText += `\n  Daftar File Lokal Disiapkan:\n  ` + galDetails.join('\n  ') + `\n  (Sediakan skema atribut src yang dapat memuat nama-nama file lokal tersebut)`;
+                    }
+                }
+                selectedElements.push(galText);
+            }
+
+            // 5. Background Music
+            if (document.getElementById('elemMusic').checked) {
+                let musicText = "- Background music dengan tombol Play/Pause";
+                if (sourceState.music === 'url') {
+                    const musicUrl = document.getElementById('musicUrl').value.trim();
+                    if (musicUrl) musicText += ` (Link Audio: ${musicUrl})`;
+                } else {
+                    const musicFile = document.getElementById('musicFile');
+                    if (musicFile.files.length > 0) {
+                        musicText += ` (File Lokal Disiapkan: "${musicFile.files[0].name}" - Atur elemen <audio> untuk memutar file lokal ini)`;
+                    } else {
+                        musicText += ` (Menggunakan file audio lokal)`;
+                    }
+                }
+                selectedElements.push(musicText);
+            }
+
+            // 6. Google Maps
+            if (document.getElementById('elemMaps').checked) {
+                selectedElements.push("- Google Maps lokasi (Sertakan link navigasi & embed)");
+            }
+
+            // 7. Wedding Gift
+            if (document.getElementById('elemGift').checked) {
+                const bankInfo = document.getElementById('bankInfo').value.trim();
+                let giftText = "- Wedding gift / Amplop digital dengan fitur Salin Rekening & Tampilan QRIS/QR Code";
+                if (bankInfo) giftText += `\n  Detail Nomor Rekening: ${bankInfo}`;
+
+                if (sourceState.qr === 'url') {
+                    const qrUrl = document.getElementById('qrUrl').value.trim();
+                    if (qrUrl) giftText += `\n  Link Gambar QR Code/QRIS: ${qrUrl}`;
+                } else {
+                    const qrFile = document.getElementById('qrFile');
+                    if (qrFile && qrFile.files.length > 0) {
+                        giftText += `\n  File Gambar QR Code/QRIS Disiapkan: "${qrFile.files[0].name}" (Tampilkan dalam modal pop-up atau kartu visual khusus)`;
+                    } else {
+                        giftText += `\n  Sediakan tempat gambar QR Code / QRIS (dalam pop-up modal/tampilan khusus)`;
+                    }
+                }
+                giftText += `\n  (Instruksi khusus AI: Buatkan modal/pop-up interaktif untuk melihat QR Code serta tombol 'Salin Nomor Rekening' secara langsung)`;
+                selectedElements.push(giftText);
+            }
+
+            // 8. Ucapan Tamu
+            if (document.getElementById('elemWishes').checked) {
+                selectedElements.push("- Ucapan dari tamu (Kolom isi nama, hubungan, & doa ucapan yang langsung muncul di daftar ucapan)");
+            }
+
+            // Prompt Construction
+            let promptText = `Saya ingin kamu bertindak sebagai seorang frontend developer profesional yang membuat website undangan pernikahan digital. Website ini harus memiliki desain yang modern, elegan, dan responsif (mobile-first). Gunakan efek animasi halus saat scroll, parallax ringan, serta transisi yang lembut. Website mencakup beberapa bagian utama seperti:
+
+1. INFORMASI PENGANTIN & ACARA:
+   - Nama Pengantin Pria: ${groomName}
+   - Nama Pengantin Wanita: ${brideName}
+   - Tanggal Pernikahan: ${formattedDate}
+   - Waktu Akad Nikah: ${akadTime}
+   - Waktu Resepsi: ${receptionTime}
+   - Lokasi Akad Nikah: ${akadLocation}
+   - Lokasi Resepsi: ${receptionLocation}
+
+2. TEMA WARNA & GAYA VISUAL:
+   - Tema Warna Website: ${colorTheme}
+   - Gaya Visual: ${visualStyle}
+   - Tipografi: Paduan Font Serif elegan (Cormorant Garamond/Playfair Display) untuk Judul, & Font Sans-Serif (Plus Jakarta Sans/Inter) untuk Isi Teks.
+
+3. ELEMEN & FITUR UTAMA WEBSITE:
+${selectedElements.join('\n')}
+
+4. KONTEN CERITA & PESAN TEKS:`;
+
+            if (loveStory) {
+                promptText += `\n   - Cerita Cinta Singkat:\n     "${loveStory}"`;
+            } else {
+                promptText += `\n   - Cerita Cinta: Sediakan seksi timeline singkat perjalanan cinta pasangan.`;
+            }
+
+            if (wishesHeader) {
+                promptText += `\n   - Kata Pembuka Kolom Ucapan:\n     "${wishesHeader}"`;
+            }
+
+            promptText += `\n\n5. SPESIFIKASI TEKNIS IMPLEMENTASI:
+   - Kode harus bersih (clean code) dan disajikan penuh dalam 1 file tunggal (Single File HTML).
+   - Gunakan Tailwind CSS untuk styling responsif & FontAwesome untuk ikon.
+   - Sediakan modal/cover pembuka ("Buka Undangan") yang memicu pemutaran audio dan animasi masuk.
+   - Apabila terdapat referensi file lokal, gunakan nama file relatif yang tertera pada instruksi aset di atas agar mudah disesuaikan oleh pengguna di komputer lokal mereka.`;
+
+            // Display Output
+            const outputArea = document.getElementById('promptOutput');
+            outputArea.value = promptText;
+
+            // Enable Buttons
+            ['copyBtn', 'downloadBtn'].forEach(id => {
+                const btn = document.getElementById(id);
+                btn.disabled = false;
+                btn.classList.remove('bg-slate-100', 'text-slate-600');
+                btn.classList.add('bg-rose-500', 'text-white', 'hover:bg-rose-600');
+            });
+
+            if (window.innerWidth < 1024) {
+                outputArea.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function copyPrompt() {
+            const outputArea = document.getElementById('promptOutput');
+            if (!outputArea.value) return;
+
+            outputArea.select();
+            document.execCommand('copy');
+
+            showToast('Prompt berhasil disalin ke clipboard!');
+        }
+
+        function downloadPrompt() {
+            const outputArea = document.getElementById('promptOutput');
+            if (!outputArea.value) return;
+
+            const blob = new Blob([outputArea.value], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'prompt-undangan-pernikahan.txt';
+            link.click();
+            URL.revokeObjectURL(link.href);
+
+            showToast('File prompt (.txt) berhasil diunduh!');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastMessage');
+            const toastText = document.getElementById('toastText');
+            toastText.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
